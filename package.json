@@ -1,0 +1,44 @@
+{
+  "name": "interview",
+  "version": "1.0.0",
+  "description": "A minimal template project for JavaScript Interviews",
+  "main": "index.js",
+  "engines": {
+    "node": ">=8.9"
+  },
+  "repository": "https://github.com/autolotto/interview.git",
+  "author": "Kris Read",
+  "license": "UNLICENSED",
+  "private": true,
+  "scripts": {
+    "start": "node index.js",
+    "lint": "./node_modules/.bin/eslint .",
+    "test": "./node_modules/.bin/ava"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.test.js"
+    ],
+    "verbose": true,
+    "concurrency": 4,
+    "failFast": false,
+    "failWithoutAssertions": true,
+    "powerAssert": true,
+    "color": true
+  },
+  "devDependencies": {
+    "ava": "^0.23.0",
+    "eslint": "^4.10.0",
+    "eslint-plugin-ava": "^4.2.2",
+    "eslint-plugin-no-loops": "^0.3.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-unicorn": "^2.1.2",
+    "testdouble": "^3.2.6"
+  },
+  "dependencies": {
+    "body-parser": "~1.18.2",
+    "express": "^4.16.2",
+    "express-promise-router": "^2.0.0"
+  }
+}

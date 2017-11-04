@@ -18,12 +18,14 @@ The Powerball winning numbers change regularly. In order to determine a win or a
 
 http://interview.api.lottery.com/powerball
 
-To determine the prize, consult the prize matrix below: 
+To determine the prize, consult the prize matrix image below: 
 
-![](https://github.com/autolotto/interview/powerball_rules.png)
+![](https://raw.githubusercontent.com/autolotto/interview/master/powerball_rules.png)
 
 
-**Exercise Rules:**
+
+
+## Exercise Rules
 
 - There is no time limit to this challenge. 
 - You must use JavaScript and must extend this code-base. 

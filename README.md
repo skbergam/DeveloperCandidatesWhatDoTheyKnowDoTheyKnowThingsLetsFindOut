@@ -1,27 +1,22 @@
 # Interview Exercise
 
-Your goal is to check-out and extend the functionality of this Node.js lottery application. 
+Your goal is to extend the functionality of this Node.js lottery service. 
 
-Powerball is a popular US lottery game.  For the purposes of this exercise, a Powerball lottery ticket contains 1 to 5 sets of picks. 
+Powerball is a popular US lottery game.  For the purposes of this exercise, a Powerball lottery "ticket" includes a "draw date" and contains 1 to 5 sets of "picks".  Each "pick" is a set of 5 integers (from `1`-`69`) along with a 6th integer (the _Powerball_, from `1`-`26`). 
 
-Each pick is a set of 5 integers (from `1`-`69`) along with a 6th integer (the _Powerball_, from `1`-`26`). 
-
-For example, a pick might be: 
+For example, a pick for the draw on `2017-11-09` might be: 
 
 `02 14 19 21 61` `25`
 
 Your application's API will accept data for a lottery ticket, and respond with whether each pick has won, the prize won per-pick, and the total of all prizes won on the ticket.  It is up to you to design and build this API. 
 
-As a bonus, your API can also return how many more $2 tickets the user might buy with their winnings. 
+The Powerball winning numbers change on each "draw date". In order to determine a win or a loss, your application will have to retrieve the Powerball winning numbers from the following URL: 
 
-The Powerball winning numbers change regularly. In order to determine a win or a loss, your application will have to retrieve the latest Powerball winning numbers from the following URL: 
+https://games.api.lottery.com/api/v2.0/results?game=59bc2b6031947b9daf338d32
 
-http://interview.api.lottery.com/powerball
-
-To determine the prize, consult the prize matrix image below: 
+To calculate the prize, consult the prize matrix image below: 
 
 ![](https://raw.githubusercontent.com/autolotto/interview/master/powerball_rules.png)
-
 
 
 
@@ -29,7 +24,8 @@ To determine the prize, consult the prize matrix image below:
 
 - There is no time limit to this challenge. 
 - You must use JavaScript and must extend this code-base. 
-- Follow best practices and conventions to the best of your abilities.
+- There is no need for a UI to solve this problem. 
+- Follow modern JavaScript and Node best practices and conventions to the best of your ability.
 - You are free to add packages or tools to your project as you see fit.
 - You must submit your code via a GitHub repository. 
 - We expect you to write the kind of feature you would put into production, including tests and documentation as you see fit.
@@ -90,16 +86,19 @@ To run the existing tests simply use:
 You should see output like this: 
 
 ```
-> interview@1.0.0 test /Users/user/interview
-> ava
- 
-  ✔ App Settings
-  ✔ App Includes Not Found Handler
-  ✔ App Includes Error Handler
- 
-
-  3 tests passed
- 
+  
+  ✔ app › App Environment
+  ✔ app › App Base Path
+  ✔ app › App Includes Error Handler Middleware
+  ✔ controllers › index › Hello World Controller
+  ✔ controllers › index › Fail Controller
+  ✔ controllers › index › Not Found Controller
+  ✔ middleware › errors › Error Handler Middleware
+  ✔ middleware › errors › Error Handler for NotFound Case
+  ✔ routes › routes › Router Setup
+  
+  9 tests passed
+  
 ```
 
 ## Contact

@@ -29,7 +29,11 @@ function computeTotalWinnings(results, picks) {
 }
 
 function selectMatchingResultsAndComputeWinnings(results, pick) {
-    const resultsOnDrawDate = results.filter(r => moment(r.resultsAnnouncedAt).isSame(pick.drawDate, 'day'));
+    // We add 1 day to the draw date before comparison since the
+    // resultsAnnouncedAt property we're comparing to is in UTC and is
+    // always the next calendar day (at least that's the assumption).
+    const drawDateForComparison = moment.utc(pick.drawDate).add(1, "days");
+    const resultsOnDrawDate = results.filter(r => moment(r.resultsAnnouncedAt).isSame(drawDateForComparison, 'day'));
 
     if (resultsOnDrawDate.length == 0) {
         return { status: "ERROR", message: `No game results found on specified 'drawDate': ${pick.drawDate}` };
@@ -39,12 +43,24 @@ function selectMatchingResultsAndComputeWinnings(results, pick) {
         return { status: "ERROR", message: `Results not announced yet for specified 'drawDate': ${pick.drawDate}` };
     }
 
-    return { status: "OK", ...computeWinnings(resultsOnDrawDate[0], pick) };
+    return { status: "OK", ...computeWinnings(resultsOnDrawDate[0], pick), res: resultsOnDrawDate[0] };
 }
 
 function computeWinnings(result, pick) {
-    const numberOfRegularMatches = 3;
-    const isPowerballMatch = true;
+    // This could be optimized to only loop through the 'pick.numbers' and 'result.results.values' arrays once each.
+    const numberOfRegularMatches = pick.numbers.filter(n =>
+        !n.isPowerball
+        && result.results.values.some(v =>
+            v.type === "NUMBER"
+            && !v.name
+            && Number(v.value) === n.value)).length;
+
+    const isPowerballMatch = pick.numbers.some(n =>
+        n.isPowerball
+        && result.results.values.some(v =>
+            v.type === "NUMBER"
+            && v.name === "Powerball"
+            && Number(v.value) === n.value));
 
     if (isPowerballMatch) {
         return {

@@ -9,11 +9,6 @@ function fail(req, res) {
   throw new Error('Hello Error');
 }
 
-// Check picks against winnings on 'POST /check'
-function check(req, res) {
-    throw new Error('Check');
-}
-
 // 404 Handler
 function notFound(req, res) {
   const err = new Error('Not Found');
@@ -24,6 +19,5 @@ function notFound(req, res) {
 module.exports = {
   root,
   fail,
-  check,
   notFound
 };

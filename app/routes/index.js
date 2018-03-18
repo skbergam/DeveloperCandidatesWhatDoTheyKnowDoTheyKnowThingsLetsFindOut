@@ -1,7 +1,8 @@
 const router = require('express-promise-router')();
 
 // Controller Functions
-const { root, fail, check, notFound } = require('../controllers/index');
+const { root, fail, notFound } = require('../controllers/index');
+const { check } = require('../controllers/check');
 
 // Routes
 router.get('/', root);

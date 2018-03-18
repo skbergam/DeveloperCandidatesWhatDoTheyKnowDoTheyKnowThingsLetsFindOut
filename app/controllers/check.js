@@ -62,7 +62,8 @@ function hasInvalidNumbers(pick) {
   const regularNumbers = pick.numbers.filter(n => !n.isPowerball);
 
   if (regularNumbers.length != 5
-      || regularNumbers.some(n => n.value < 1 || n.value > 69)) {
+      || regularNumbers.some(n => n.value < 1 || n.value > 69)
+      || !isDistinct(regularNumbers)) {
     return true;
   }
 
@@ -72,6 +73,14 @@ function hasInvalidNumbers(pick) {
         || powerballNumbers.some(n => n.value < 1 || n.value > 26)) {
     return true;
   }
+}
+
+function isDistinct(numbers) {
+    const lookup = {};
+
+    numbers.forEach(n => lookup[n.value] = 1);
+
+    return Object.keys(lookup).length == numbers.length;
 }
 
 function validateRequestBody(body) {

@@ -9,5 +9,6 @@ test('Router Setup', t => {
 
   t.true(routes.includes('/'));
   t.true(routes.includes('/fail'));
+  t.true(routes.includes('/check'));
 });
 

@@ -12,11 +12,11 @@ function selectMatchingResultsAndComputeWinnings(results, pick) {
             .isSame(drawDateForComparison, 'day'));
 
     if (resultsOnDrawDate.length == 0) {
-        return { status: "ERROR", message: `No game results found on specified 'drawDate': ${pick.drawDate}` };
+        return { status: "ERROR", isWin: false, winValue: 0, message: `No game results found on specified 'drawDate': ${pick.drawDate}` };
     }
 
     if (!resultsOnDrawDate[0].results) {
-        return { status: "ERROR", message: `Results not announced yet for specified 'drawDate': ${pick.drawDate}` };
+        return { status: "ERROR", isWin: false, winValue: 0, message: `Results not announced yet for specified 'drawDate': ${pick.drawDate}` };
     }
 
     return { status: "OK", ...computeWinnings(resultsOnDrawDate[0], pick), res: resultsOnDrawDate[0] };

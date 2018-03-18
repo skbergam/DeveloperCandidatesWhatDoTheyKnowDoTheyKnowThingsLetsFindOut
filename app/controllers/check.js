@@ -1,4 +1,4 @@
-const moment = require('moment');
+const moment = require('moment-timezone');
 const fetch = require('node-fetch');
 
 // Check picks against winnings on 'POST /check'
@@ -29,11 +29,15 @@ function computeTotalWinnings(results, picks) {
 }
 
 function selectMatchingResultsAndComputeWinnings(results, pick) {
-    // We add 1 day to the draw date before comparison since the
-    // resultsAnnouncedAt property we're comparing to is in UTC and is
-    // always the next calendar day (at least that's the assumption).
-    const drawDateForComparison = moment.utc(pick.drawDate).add(1, "days");
-    const resultsOnDrawDate = results.filter(r => moment(r.resultsAnnouncedAt).isSame(drawDateForComparison, 'day'));
+    // We parse the draw date on the request as the Eastern US time zone.
+    const drawDateForComparison = moment.tz(pick.drawDate, "America/New_York");
+
+    // We convert the 'resultsAnnouncedAt' value to Eastern US as well to get a valid comparison. This assumes
+    // the 'resultsAnnouncedAt' is on the same calendar day in the Eastern US time zone as the "draw date".
+    const resultsOnDrawDate = results.filter(r =>
+        moment(r.resultsAnnouncedAt)
+            .tz("America/New_York")
+            .isSame(drawDateForComparison, 'day'));
 
     if (resultsOnDrawDate.length == 0) {
         return { status: "ERROR", message: `No game results found on specified 'drawDate': ${pick.drawDate}` };

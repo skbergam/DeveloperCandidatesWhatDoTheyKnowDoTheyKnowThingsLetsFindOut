@@ -41,6 +41,7 @@
     "express": "^4.16.2",
     "express-promise-router": "^2.0.0",
     "moment": "^2.21.0",
+    "moment-timezone": "^0.5.14",
     "node-fetch": "^2.1.1"
   }
 }

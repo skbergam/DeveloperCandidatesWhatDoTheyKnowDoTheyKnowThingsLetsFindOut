@@ -1,10 +1,24 @@
 const moment = require('moment');
+const fetch = require('node-fetch');
 
 // Check picks against winnings on 'POST /check'
 async function check(req, res) {
     validateRequestBody(req.body);
 
-    res.send(JSON.stringify({ message: "You win." }));
+    const results = await fetchResults();
+
+    const winnings = comparePicksToResults(results, req.body.picks);
+
+    res.send(JSON.stringify({ winnings }));
+}
+
+function fetchResults() {
+  return fetch("https://games.api.lottery.com/api/v2.0/results?game=59bc2b6031947b9daf338d32")
+    .then(r => r.json());
+}
+
+function comparePicksToResults(results, picks) {
+  return { message: "You win." };
 }
 
 const validations = [

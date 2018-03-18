@@ -7,9 +7,7 @@ async function check(req, res) {
 
     const results = await fetchResults();
 
-    const winnings = comparePicksToResults(results, req.body.picks);
-
-    res.send(JSON.stringify({ winnings }));
+    res.send(JSON.stringify({ winnings: req.body.picks.map(p => comparePickToResults(results, p)) }));
 }
 
 function fetchResults() {
@@ -17,8 +15,22 @@ function fetchResults() {
     .then(r => r.json());
 }
 
-function comparePicksToResults(results, picks) {
-  return { message: "You win." };
+function comparePickToResults(results, pick) {
+    const resultsOnDrawDate = results.filter(r => moment(r.resultsAnnouncedAt).isSame(pick.drawDate, 'day'));
+
+    if (resultsOnDrawDate.length == 0) {
+        return { status: "ERROR", message: `No game results found on specified 'drawDate': ${pick.drawDate}` };
+    }
+
+    if (resultsOnDrawDate.length > 1) {
+        return { status: "ERROR", message: `Multiple game results found on specified 'drawDate': ${pick.drawDate}` };
+    }
+
+    return comparePickToResult(resultsOnDrawDate[0], pick);
+}
+
+function comparePickToResult(result, pick) {
+    return {message: "Here's some results."};
 }
 
 const validations = [

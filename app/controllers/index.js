@@ -1,12 +1,17 @@
 
-// Hello World on '/'
+// Hello World on 'GET /'
 function root(req, res) {
   res.json({ message: 'Hello World' });
 }
 
-// Simulate a Failure on '/fail'
+// Simulate a Failure on 'GET /fail'
 function fail(req, res) {
   throw new Error('Hello Error');
+}
+
+// Check picks against winnings on 'POST /check'
+function check(req, res) {
+    throw new Error('Check');
 }
 
 // 404 Handler
@@ -19,5 +24,6 @@ function notFound(req, res) {
 module.exports = {
   root,
   fail,
+  check,
   notFound
 };
